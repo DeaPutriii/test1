@@ -17,6 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final List<Map<String, dynamic>> menuItems = [
     {
       'image': 'assets/image/bakso_bakar.jpeg',
@@ -26,7 +28,7 @@ class HomeScreen extends StatelessWidget {
       'views': '12,8 rb',
     },
     {
-      'image': 'assets/image/salad buah.jpeg',
+      'image': 'assets/image/Salad.jpeg',
       'title': 'Salad Buah',
       'rating': '4.5',
       'time': '30 mnt',
@@ -37,7 +39,7 @@ class HomeScreen extends StatelessWidget {
       'title': 'Sate',
       'rating': '4.4',
       'time': '38 mnt',
-      'views': '14,3',
+      'views': '14,3 rb',
     },
     {
       'image': 'assets/image/gacoan.jpeg',
@@ -49,17 +51,77 @@ class HomeScreen extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext contex) {
+  Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Assigning the key to Scaffold
       appBar: AppBar(
-        title: Text('Menu Yummy Hari Ini'),
+        title: const Text('Menu Yummy Hari Ini'),
         centerTitle: true,
+        // Button to open the drawer
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer(); // Opens the drawer
+          },
+        ),
+      ),
+      // Drawer with logo
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: const Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const CircleAvatar(
+                backgroundImage: AssetImage(
+                    'assets/image/yummy.jpg'), // Your image path
+              ),
+              title: const Text('Home'),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              leading: const CircleAvatar(
+                backgroundImage: AssetImage(
+                    'assets/image/settings.jpg'), // Your image path
+              ),
+              title: const Text('Settings'),
+              onTap: () {
+                // Logic to navigate to the settings page
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              leading: const CircleAvatar(
+                backgroundImage: AssetImage(
+                    'assets/image/about.jpg'), // Your image path
+              ),
+              title: const Text('About'),
+              onTap: () {
+                // Logic to navigate to the about page
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
           itemCount: menuItems.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 0.7,
             crossAxisSpacing: 10,
@@ -88,15 +150,15 @@ class HomeScreen extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(width: 10),
-                        Text(
+                        const SizedBox(width: 10),
+                        const Text(
                           'Yummy Official',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
                         ),
-                        Icon(
+                        const Icon(
                           Icons.verified,
                           color: Colors.blue,
                           size: 18,
@@ -118,51 +180,46 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           item['title'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(
                           children: [
-                            // Ikon bintang dan rating
-                            Icon(Icons.star, color: Colors.orange, size: 16),
-                            SizedBox(width: 4),
+                            const Icon(Icons.star, color: Colors.orange, size: 16),
+                            const SizedBox(width: 4),
                             Text(
                               item['rating'].toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
                               ),
                             ),
-                            Spacer(),
-
-                            // Menambahkan ikon jam dan waktu
-                            Icon(Icons.access_time, size: 16), // Ikon jam
-                            SizedBox(
-                                width:
-                                    4), // Jarak antara ikon jam dan teks waktu
+                            const Spacer(),
+                            const Icon(Icons.access_time, size: 16),
+                            const SizedBox(width: 4),
                             Text(
                               item['time'],
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ],
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(
                           children: [
-                            Icon(Icons.remove_red_eye, size: 16),
-                            SizedBox(width: 4),
+                            const Icon(Icons.remove_red_eye, size: 16),
+                            const SizedBox(width: 4),
                             Text(
                               item['views'],
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
-                            Spacer(),
-                            Icon(Icons.bookmark_border, size: 16),
+                            const Spacer(),
+                            const Icon(Icons.bookmark_border, size: 16),
                           ],
                         ),
                       ],
